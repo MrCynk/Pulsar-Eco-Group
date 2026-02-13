@@ -1,0 +1,105 @@
+body {
+    max-width: 100%;
+    min-width: 50%;
+    font-family: Arial;
+    background: #ffffff;
+    background-image: url("images/panneau1.jpg");
+    background-size: cover;
+    background-position: center;
+}
+
+h1 {
+    text-align: center;
+}
+
+form {
+    max-width: 60%;
+    margin: auto;
+    background: aliceblue;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    color: black;
+}
+
+.formulaire {
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #eef5ee;
+    border-radius: 8px;
+}
+
+label {
+    text-align: center;
+    display: block;
+    margin-top: 15px;
+}
+
+input,
+select {
+    width: 90%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-left: 15px;
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    background: rgb(1, 109, 6);
+    color: antiquewhite;
+    font-size: 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.resultat {
+    width: 94%;
+    margin-top: 20px;
+    background: #e9f58e;
+    padding: 15px;
+    margin-left: 10px;
+    border-radius: 5px;
+}
+
+span{
+    color: green;
+}
+
+.contact a{
+    text-decoration: none;
+    color: #000000;
+}
+.fa-facebook{
+    color: blue;
+}
+.fa-whatsapp{
+    color: green;
+}
+i{
+    color: black;
+    font-size: 25px;
+}
+
+section h3{
+    text-decoration: underline;
+}
+footer{
+    margin: 10px;
+    justify-content: space-between;
+    padding: 14px 18px;
+    font-size: 18px;
+    text-align: center;
+    background: linear-gradient(-45deg, #629ce7, #06b455, darkgreen, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradientMove 4s ease infinite;
+}
+
+@keyframes gradientMove {
+    0% { background-position: 0% 50%;}
+    50% { background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
+}
+
+footer small{opacity: 0.9;}

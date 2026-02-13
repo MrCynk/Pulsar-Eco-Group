@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="assets/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="form.css">
+    <link rel="shortcut icon" href="images/Pulsar Icon.jpeg" type="image/x-icon">
+    <title>Ménages</title>
+</head>
+<body>
+    <header>
+        <h1>Dimensionnement Solaire - Ménage</h1>
+    </header>
+
+    <form onsubmit="event.preventDefault(); calculer();">
+        <label>Puissance totale appareils (W)</label>
+        <input type="number" id="puissance" required>
+
+        <label>Heure d'utilisation par jour</label>
+        <input type="number" id="heures" required>
+
+        <label>Latitude du site</label>
+        <input type="number" id="lat" value="8">
+
+        <button>Calculer</button>
+        <div id="resultat" class="result"></div>
+    </form>
+
+    <script src="data.js"></script>
+    <script src="calc.js"></script>
+    <script src="menage.js"></script>
+</body>
+</html>

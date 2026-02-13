@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="form.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="images/Pulsar Icon.jpeg" type="image/x-icon">
+    <title>Entreprises & Institutions</title>
+</head>
+<body>
+    <header>
+        <h1>Entreprises & Institutions</h1>
+    </header>
+
+    <form onsubmit="event.preventDefault(); calculer();">
+        <label>Consommation journalière estimée (Wh)</label>
+        <input type="number" id="energie" required>
+
+        <button>Calculer</button>
+        <div id="resultat" class="result"></div>
+    </form>
+
+    <script src="data.js"></script>
+    <script src="calc.js"></script>
+    <script src="entre.js"></script>
+</body>
+</html>
