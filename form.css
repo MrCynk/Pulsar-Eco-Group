@@ -10,10 +10,11 @@ body {
 
 h1 {
     text-align: center;
+    text-decoration: underline;
 }
 
 form {
-    max-width: 60%;
+    max-width: 80%;
     margin: auto;
     background: aliceblue;
     padding: 20px;
@@ -35,15 +36,13 @@ label {
     margin-top: 15px;
 }
 
-input,
-select {
+input,select {
     width: 90%;
-    padding: 10px;
-    margin-top: 5px;
-    margin-left: 15px;
+    padding: 8px;
+    margin: 5px;
 }
 
-button {
+#calcBtn {
     width: 100%;
     padding: 15px;
     background: rgb(1, 109, 6);
@@ -52,6 +51,40 @@ button {
     border: none;
     border-radius: 8px;
     cursor: pointer;
+}
+
+#button{
+    padding:10px 15px;
+    border:none;
+    border-radius:5px;
+    cursor:pointer;
+}
+
+.add-btn{
+    background:#27ae60;
+    color:white;
+}
+.calc-btn{
+    background:#2980b9;
+    color:white;
+}
+.pdf-btn{
+    background:#c0392b;
+    color:white;
+}
+table{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:15px;
+}
+th, td{
+    border:1px solid #ddd;
+    padding:8px;
+    text-align:center;
+}
+th{
+    background:#2980b9;
+    color:white;
 }
 
 .resultat {

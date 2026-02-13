@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <link rel="stylesheet" href="assets/css/all.min.css">
     <link rel="shortcut icon" href="images/Pulsar Icon.jpeg" type="image/x-icon">
     <link rel="stylesheet" href="form.css">
@@ -54,8 +55,11 @@
             <input type="number" id="panelPower" value="550" required>
         </section>
 
-        <button>Calculer le système</button>
+        <button onclick="calculer()" class="calc-btn" id="button">Calculer le système</button>
+
         <div id="results" class="resultat"></div>
+        
+        <button class="pdf-btn" id="button"  onclick="generatePDF()">Télécharger le devis en PDF</button>
     </form>
 
     <footer>

@@ -1,6 +1,6 @@
 function calculer() {
-    const surf = parseFloat(document.getElementById("surface").value);
-    const clt = parseFloat(document.getElementById("culture").value);
+    const surface = parseFloat(document.getElementById("surface").value);
+    const culture = parseFloat(document.getElementById("culture").value);
     const ef = parseFloat(document.getElementById("efficiency").value);
 
     const dp = parseFloat(document.getElementById("depth").value);
@@ -10,7 +10,7 @@ function calculer() {
     const psh = parseFloat(document.getElementById("psh").value);
     const panelPower = parseFloat(document.getElementById("panelPower").value);
 
-    if (surf < 0 || dp < 0) {
+    if (surface < 0 || dp < 0) {
         alert("Veuillez entrer des valeurs positives pour la surface et la profondeur !");
         return;
     }
@@ -24,7 +24,7 @@ function calculer() {
     }
 
     // Besoin en eau (m³/j)
-    const waterNeed = surf * clt * 10 / ef;
+    const waterNeed = surface * culture * 10 / ef;
 
     // Débit (m³/h)
     const flow = waterNeed / hr;
@@ -48,7 +48,7 @@ function calculer() {
     const nbPanels = Math.ceil(pvPower / panelPower);
 
     document.getElementById("results").innerHTML = `
-    <h2>📊 Résultats</h2>
+    <h2>Résultats</h2>
     <b>Besoin en eau : </b>${waterNeed.toFixed(1)} m³/j <br>
     <b>Débit requis : </b>${flow.toFixed(2)} m³/h <br>
     <b>Hauteur Manométrique Totale(HMT) : </b>${HMT.toFixed(1)} m <br>
@@ -57,3 +57,69 @@ function calculer() {
     <b>Nombre panneaux : </b>${nbPanels}
     `;
 }
+
+
+/*async function generatePDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+
+    let content = document.getElementById("results").innerText;
+
+    doc.text("DEVIS SYSTEME SOLAIRE RESIDENTIEL", 10, 10);
+    doc.text(content, 10, 30);
+
+    doc.save("Devis_Pompage_Solaire_Agricole.pdf");
+}*/
+
+async function generatePDF() {
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    let content = document.getElementById("results").innerText;
+
+    doc.setFontSize(16);
+    doc.text("DEVIS - SYSTÈME DE POMPAGE SOLAIRE", 20, 20);
+    doc.text(content, 10, 30);
+
+    doc.setFontSize(11);
+    doc.text(`<b></b>Surface : </b>${devisData.surface} ha`, 20, 42);
+    doc.text(`<b>Culture : </b>${devisData.culture}`, 20, 49);
+
+    doc.line(20, 55, 190, 55);
+
+    doc.text("=== Résultats techniques ===", 20, 65);
+
+    doc.text(`<b></b>Besoin eau : </b>${devisData.waterNeed.toFixed(1)} m3/j`, 20, 75);
+    doc.text(`<b>Débit : </b>${devisData.flow.toFixed(2)} m3/h`, 20, 82);
+    doc.text(`<b>HMT : </b>${devisData.HMT.toFixed(1)} m`, 20, 89);
+    doc.text(`<b>Puissance pompe : </b>${(devisData.pumpPower / 1000).toFixed(2)} kW`, 20, 96);
+    doc.text(`<b>Puissance champ PV : </b>${(devisData.pvPower / 1000).toFixed(2)} kWc`, 20, 103);
+    doc.text(`<b>Nombre panneaux : </b>${devisData.nbPanels}`, 20, 110);
+
+    doc.line(20, 118, 190, 118);
+
+    doc.text("=== Fournitures estimées ===", 20, 128);
+
+    doc.text(` <b>Pompe solaire </b>${(devisData.pumpPower / 1000).toFixed(2)} kW`, 20, 138);
+    doc.text(` ${devisData.nbPanels} panneaux PV`, 20, 145);
+    doc.text(" Contrôleur MPPT", 20, 152);
+    doc.text(" Structures", 20, 159);
+    doc.text(" Protections DC", 20, 166);
+    doc.text(" Câblage & tuyauterie", 20, 173);
+
+    doc.line(20, 180, 190, 180);
+
+    // Estimation coût très simple (prototype)
+    const costPV = devisData.nbPanels * 180;
+    const costPump = (devisData.pumpPower / 1000) * 600;
+    const total = costPV + costPump;
+
+    doc.text("=== Estimation financière ===", 20, 190);
+
+    doc.text(`<b>Champ PV : </b>${costPV.toFixed(0)} €`, 20, 200);
+    doc.text(`<b>Pompe : </b>${costPump.toFixed(0)} €`, 20, 207);
+    doc.text(`<b></b>TOTAL estimé : </b>${total.toFixed(0)} €`, 20, 217);
+
+    doc.save("devis_pompage_solaire.pdf");
+}
+
