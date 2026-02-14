@@ -63,7 +63,7 @@ function generateQuoteNumber(){
     const datePart = now.getFullYear().toString() + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0');
     const randomPart = Math.floor(Math.random() * 900) + 100;
 
-    return `PE-${datePart}-${randomPart}`;
+    return `PEG-${datePart}-${randomPart}`;
 }
 
 function addWatermark(doc) {
@@ -82,7 +82,7 @@ function addFooter(doc) {
 
     doc.line(20, 280, 190, 280);
     doc.text("PULSAR ECO GROUP - Solutions solaires intelligentes", 20, 287);
-    doc.text("Email :  contact@pulsarecogroup.com", 120, 287);
+    doc.text("Email :  pulsarecogroup@gmail.com", 120, 287);
     doc.text("Lomé - Togo", 120, 292);
 
     doc.setTextColor(0);
