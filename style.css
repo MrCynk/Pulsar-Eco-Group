@@ -30,7 +30,6 @@ header p{
 
 header{
     padding-top: 23px;
-    height: 350px;
     position: sticky;
     z-index: 100;
     top: 0;
