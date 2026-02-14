@@ -86,6 +86,8 @@ function addFooter(doc) {
     doc.text("PULSAR ECO GROUP - Solutions solaires intelligentes", 20, 287);
     doc.text("Email :  pulsarecogroup@gmail.com", 120, 287);
     doc.text("Lomé - Togo", 120, 292);
+    doc.text("Téléphone :  +228 92196727 / +228 90104393 / +228 93775800", 20, 292);
+
 
     doc.setTextColor(0);
 }
