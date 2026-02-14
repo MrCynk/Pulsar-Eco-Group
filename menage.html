@@ -10,6 +10,10 @@
     <title>Ménages</title>
 </head>
 <body>
+    <header>
+        <img id="logo" src="images/Pulsar Icon.jpeg" alt="">
+    </header>
+
     <form onsubmit="event.preventDefault(); calculer();">
         <h1>Module Domestique</h1>
         <h3>Inventaire des équipements</h3>
@@ -30,6 +34,7 @@
         Autonomie (jours) : <input type="number" id="autonomy" value="1"><br>
         Heures Solaires Pleines (HSP) : <input type="number" id="hsp" value="5"><br>
         Rendement système (0.75-0.8) : <input type="number" step="0.01" id="efficiency" value="0.75"><br>
+        Votre budget : <input type="number" id="bud" placeholder="900 000"><br>
         <hr>
 
         <button class="calc-btn" id="button" onclick="calculer()">Calculer</button>

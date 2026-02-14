@@ -48,7 +48,7 @@ function calculer() {
     const nbPanels = Math.ceil(pvPower / panelPower);
 
     document.getElementById("results").innerHTML = `
-    <h2>Résultats</h2>
+    <h2>RESULTATS DE L'ANALYSE :</h2> <br>
     <b>Besoin en eau : </b>${waterNeed.toFixed(1)} m³/j <br>
     <b>Débit requis : </b>${flow.toFixed(2)} m³/h <br>
     <b>Hauteur Manométrique Totale(HMT) : </b>${HMT.toFixed(1)} m <br>
@@ -58,20 +58,68 @@ function calculer() {
     `;
 }
 
+function generateQuoteNumber(){
+    const now = new Date();
+    const datePart = now.getFullYear().toString() + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0');
+    const randomPart = Math.floor(Math.random() * 900) + 100;
 
-/*async function generatePDF() {
+    return `PE-${datePart}-${randomPart}`;
+}
+
+function addWatermark(doc) {
+    doc.setTextColor(220);
+    doc.setFontSize(60);
+    doc.text("PULSAR ECO GROUP", 150, 220, {
+        align: "center",
+        angle: 45
+    });
+    doc.setTextColor(0);
+}
+
+function addFooter(doc) {
+    doc.setFontSize(9);
+    doc.setTextColor(100);
+
+    doc.line(20, 280, 190, 280);
+    doc.text("PULSAR ECO GROUP - Solutions solaires intelligentes", 20, 287);
+    doc.text("Email :  contact@pulsarecogroup.com", 120, 287);
+    doc.text("Lomé - Togo", 120, 292);
+
+    doc.setTextColor(0);
+}
+
+async function generatePDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
+    const today = new Date();
+    const qoteNumber = generateQuoteNumber();
+    const formatedDate = today.toLocaleDateString("fr-FR")
+    const logo = document.getElementById("logo");
+
+    addWatermark(doc);
+
+    //doc.addImage(logo, "JPEG", 150, 10, 40, 20);
+
     let content = document.getElementById("results").innerText;
 
-    doc.text("DEVIS SYSTEME SOLAIRE RESIDENTIEL", 10, 10);
-    doc.text(content, 10, 30);
+    doc.setFontSize(18);
+    doc.text("DEVIS Pompage Solaire Agricole", 20, 25);
 
-    doc.save("Devis_Pompage_Solaire_Agricole.pdf");
-}*/
+    doc.setFontSize(11);
+    doc.text(`N° Devis : ${qoteNumber}`, 20, 35);
+    doc.text(`Date : ${today}`, 20, 42);
+    doc.line(20, 48, 190, 48);
 
-async function generatePDF() {
+    doc.setFontSize(22)
+    doc.text(content, 20, 90);
+
+    addFooter(doc);
+
+    doc.save(`Devis_${qoteNumber}.pdf`);
+}
+
+/*async function generatePDF() {
 
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
@@ -121,5 +169,5 @@ async function generatePDF() {
     doc.text(`<b></b>TOTAL estimé : </b>${total.toFixed(0)} €`, 20, 217);
 
     doc.save("devis_pompage_solaire.pdf");
-}
+}*/
 

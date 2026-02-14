@@ -10,7 +10,7 @@ function addRow(){
     <td><input type="number" placeholder="1200"></td>
     <td><input type="number" placeholder="2"></td>
     <td><input type="number" placeholder="6"></td>
-    <td><button onclick="deleteRow(this)">X</button></td>
+    <td><button class="del-btn" onclick="deleteRow(this)">X</button></td>
     `;
 }
 
@@ -44,12 +44,12 @@ function calculer(){
     });
 
     let energieKwh = energie / 1000;
+    let hsp = document.getElementById("hsp").value;
+    let efficiency = document.getElementById("efficiency").value;
 
-    const HSP = 5.5;
-    const rendement = 0.8;
     const puissancePanneau = 550;
 
-    let puissancePV = energie / (HSP * rendement);
+    let puissancePV = energie / (hsp * efficiency);
     let nbPanneaux = Math.ceil(puissancePV / puissancePanneau);
 
     let type = document.getElementById("typeInstallation").value;
@@ -62,41 +62,102 @@ function calculer(){
     let onduleur = Math.ceil((puissancePV * 1.3)/1000);
 
     let prixPanneau = 180000;
-    let prixOnduleur = 1200000;
-    let prixBatterie = 950000;
+    let prixOnduleur = 300000;
+    let prixBatterie = 450000;
+    let main_doeuvre = nbPanneaux * 10000;
 
-    let coutTotal = (nbPanneaux * prixPanneau) + 
-                    (onduleur * prixOnduleur) +
-                    (batteries * prixBatterie);
+    let coutTotal = (nbPanneaux * prixPanneau) + (onduleur * prixOnduleur) +(batteries * prixBatterie);
 
-    document.getElementById("resultat").innerHTML = `
-    <h3>Résultats</h3>
+    document.getElementById("results").innerHTML = `
     <p><strong>Consommation journalière :</strong> ${energieKwh.toFixed(2)} kWh</p>
     <p><strong>Panneaux recommandés :</strong> ${nbPanneaux} panneaux 550W</p>
     <p><strong>Onduleur recommandé :</strong> ${onduleur} kVA</p>
     <p><strong>Batteries :</strong> ${type !== "reseau" ? batteries + " unités 48V" : "Non requises"}</p>
-    <p><strong>Coût estimatif :</strong> ${coutTotal.toLocaleString()} FCFA</p>
+    <p><strong>Coût estimatif :</strong> ${coutTotal} FCFA</p>
+    <p><strong>Main d'oeuvre : </strong> ${main_doeuvre} FCFA </p>
+    <p><strong>Coût Total : </strong> ${coutTotal + main_doeuvre} FCFA </p>
     `;
 }
 
-/*function genererPDF(){
+/*function addLogo(doc, callback){
+    const img = new Image();
+    img.src = "images/Pulsar Icon.jpeg";
 
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
+    img.onload = function (){
+        doc.addImage(img, "JPEG", 150, 10, 40, 20);
+        callback();
+    };
 
-    doc.text("DEVIS - SYSTEME SOLAIRE PME", 20, 20);
-    doc.text(document.getElementById("resultat").innerText, 20, 40);
-
-    doc.save("Devis_PME_Solaire.pdf");
+    img.onerror = function (){
+        console.error("Erreur chargement logo");
+        callback();
+    };
 }*/
+
+function generateQuoteNumber(){
+    if (!equipements){
+        alert("Veuillez saisir des données pour effectuer le calcul");
+        return;
+    }
+
+    const now = new Date();
+    const datePart = now.getFullYear().toString() + String(now.getMonth() + 1).padStart(2, '0') + String(now.getDate()).padStart(2, '0');
+    const randomPart = Math.floor(Math.random() * 900) + 100;
+
+    return `PEG-${datePart}-${randomPart}`;
+}
+
+function addWatermark(doc) {
+    doc.setTextColor(220);
+    doc.setFontSize(60);
+    doc.text("PULSAR ECO GROUP", 150, 220, {
+        align: "center",
+        angle: 45
+    });
+    doc.setTextColor(0);
+}
+
+function addFooter(doc) {
+    doc.setFontSize(9);
+    doc.setTextColor(100);
+
+    doc.line(20, 280, 190, 280);
+    doc.text("PULSAR ECO GROUP - Solutions solaires intelligentes", 20, 287);
+    doc.text("Email :  contact@pulsarecogroup.com", 120, 287);
+    doc.text("Lomé - Togo", 120, 292);
+
+    doc.setTextColor(0);
+}
+
 async function generatePDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
 
-    let content = document.getElementById("resultat").innerText;
+    /*addLogo(doc, function(){
+        doc.setFontSize(15);
+    })*/
 
-    doc.text("DEVIS SYSTEME SOLAIRE PME", 10, 10);
-    doc.text(content, 10, 30);
+    const today = new Date();
+    const qoteNumber = generateQuoteNumber();
+    const formatedDate = today.toLocaleDateString("fr-FR")
 
-    doc.save("Devis_Solaire_PME.pdf");
+    addWatermark(doc);
+
+
+    let content = document.getElementById("results").innerText;
+
+    doc.setFontSize(18);
+    doc.text("DEVIS Solaire PME", 20, 25);
+
+    doc.setFontSize(11);
+    doc.text(`N° Devis : ${qoteNumber}`, 20, 35);
+    doc.text(`Date : ${today}`, 20, 42);
+    doc.line(20, 48, 190, 48);
+
+    doc.setFontSize(18)
+    doc.text(content, 20, 80);
+
+    addFooter(doc);
+
+    doc.save(`Devis_${qoteNumber}.pdf`);
 }
